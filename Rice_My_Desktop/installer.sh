@@ -28,22 +28,48 @@ banner () {
 
 ##############################################################
 
-install_i3w() {
-	banner "deps i3"
-	sudo apt install i3 i3-gaps i3-wm i3blocks
+
+bootstrap() {
+	banner "-={ install everything }=-"
+	install_deps
+	create_dirs
+	get_shell_themes
+	get_custom_zsh_theme
+	get_rust_lang
+	get_configs_i3_picom
+	install_i3blocks_contrib
+	install_asdf_manager
+	install_asdf_nodejs
+	install_ruby_asdf
+	get_golang_install
+	source $HOME/.zshrc
+	install_golang_tools
+	
+}
+
+create_dirs() {
+	banner "organize dirs"
+	mkdir -p $HOME/.config/i3/
+	mkdir -p $HOME/.config/picom/
+	mkdir -p $HOME/.config/polybar/
 	banner "done"
 }
 
-install_icon_themes() {  
-	banner "install moka theme and faba themes"
-	sudo apt install moka-icon-theme faba-icon-theme
-	echo "done"
-}
 
 install_deps() {
 	banner "install all deps"
-	sudo apt install coreutils terminator dirmngr gpg nmap wireshark gawk curl wget git zsh cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev  libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev libjsoncpp-dev python3-pip python3-setuptools fzf rofi -y
+	sudo apt install coreutils terminator dirmngr gpg nmap wireshark gawk curl wget git zsh cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev  libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev libjsoncpp-dev python3-pip python3-setuptools fzf rofi cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python-xcbgen xcb-proto libxcb-xrm-dev i3-wm libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev xcb libxcb-ewmh2 libpcap-dev i3 i3-gaps i3-wm i3blocks moka-icon-theme faba-icon-theme -y
 	banner "done"
+}
+
+get_custom_zsh_theme() {
+	wget https://raw.githubusercontent.com/rodpwn/dotfiles/main/Rice_My_Desktop/zsh/rodpwnzsh.zsh-theme
+	mv rodpwnzsh.zsh-theme $HOME/.oh-my-zsh/themes
+	rm -rf $HOME/.zshrc
+	https://raw.githubusercontent.com/rodpwn/dotfiles/main/Rice_My_Desktop/zsh/.zshrc
+	mv .zshrc $HOME
+	source $HOME/.zshrc
+	
 }
 
 
@@ -56,13 +82,59 @@ install_ppas() {
 	banner "done"
 }
 
+install_golang_tools() {
+	GO111MODULE=on go get -v github.com/projectdiscovery/naabu/v2/cmd/naabu
+	GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+	GO111MODULE=on go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+	GO111MODULE=on go get -v github.com/projectdiscovery/httpx/cmd/httpx
+	go get -u github.com/tomnomnom/httprobe
+	go get -u github.com/tomnomnom/assetfinder
+	go get -u github.com/tomnomnom/meg
+	go get -u github.com/tomnomnom/hacks/html-tool
+	go get -u github.com/tomnomnom/gf
+	go get -u github.com/gwen001/github-subdomains
+	go install github.com/OJ/gobuster/v3@latest
+	nuclei -update-templates
+}
 
-install_i3blocks() {
+create_cypher_volume() {
+	USER=$(whoami)
+	cd /home/$USER
+	ls -lha
+	dd if=/dev/zero of=/home/$USER/crypt bs=1M count=30480
+	sudo cryptsetup luksFormat /home/$USER/crypt
+	sudo cryptsetup luksOpen /home/$USER/crypt temp
+
+	echo "Creating a mount file system"
+	sudo mkfs.ext4 -j /dev/mapper/temp
+	sudo mkdir /media/files
+	sudo mount /dev/mapper/temp /media/files
+	sudo mkdir -p /media/files/temp
+	sudo chown -R $USER:$USER /media/files/temp
+}
+
+
+install_polybar() {
+	git clone https://github.com/jaagr/polybar.git
+    cd polybar && ./build.sh
+    cp /usr/share/doc/polybar/config ~/.config/polybar/config
+}
+
+install_i3blocks_contrib() {
 	banner "install i3blocks"
 	git clone https://github.com/vivien/i3blocks-contrib.git
     mv i3blocks-contrib i3blocks
 	mv i3blocks $HOME/.config/i3/
 	banner "done"	
+}
+
+perms_ssh() {
+	chmod 700 ~/.ssh
+	chmod 644 ~/.ssh/authorized_keys
+	chmod 644 ~/.ssh/known_hosts
+	chmod 644 ~/.ssh/config
+	chmod 600 ~/.ssh/id_rsa
+	chmod 644 ~/.ssh/id_rsa.pub
 }
 
 install_asdf_manager() {
@@ -87,16 +159,8 @@ install_ruby_asdf() {
 	banner "done"
 }
 
-organize_dirs() {
-	banner "organize dirs"
-	mkdir -p $HOME/.config/i3/
-	mkdir -p $HOME/.config/picom/
-	banner "done"
-}
-
-
 get_configs_i3_picom() {
-	banner "get config i3"
+	banner "get picom and i3 config"
 	wget https://raw.githubusercontent.com/rodpwn/dotfiles/main/Rice_My_Desktop/wm/i3/config
 	mv config $HOME/.config/i3/
 
@@ -126,42 +190,12 @@ get_rust_lang() {
 	banner "done"
 }
 
-
-i3() {
-	
-	banner "> installing i3 configs"
-	install_ppas
-	organize_dirs
-	install_i3w
-	install_i3blocks
-	banner "done"
+get_golang_install() {
+	wget https://go.dev/dl/go1.17.5.linux-amd64.tar.gz
+	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.17.5.linux-amd64.tar.gz
 }
 
-picom() {
-	banner "> config picom and i3"
-	get_configs_i3_picom
-	banner "done"
-	
-}
 
-asdf() {
-	banner "> asdf"
-	install_asdf_manager
-	install_asdf_nodejs
-	install_ruby_asdf
-	banner "done"
-}
-
-zsh() {
-	get_shell_themes
-	get_zsh_config
-	banner "done"
-}
-
-langs() {
-	get_rust_lang
-	banner "done"
-}
 
 
 
@@ -171,8 +205,8 @@ menu() {
 
 	echo -ne "
 	        > Choose: 	
-		$(ColorGreen '1)') Install all deps
-		$(ColorGreen '2)') install i3
+		$(ColorGreen '1)') BootStrap
+		$(ColorGreen '2)') Cypher volume
 		$(ColorGreen '3)') install picom 
 		$(ColorGreen '4)') asdf
 		$(ColorGreen '5)') install ZSH
@@ -182,12 +216,12 @@ menu() {
         	read a
 
         case $a in
-	        1) install_deps ; menu ;;
-	        2) i3 ; menu ;;
-	        3) picom ; menu ;;
-	        4) asdf ; menu ;;
-	        5) zsh ; menu ;;
-		6) langs ; menu ;;
+	        1) bootstrap ; menu ;;
+	        2) create_cypher_volume ; menu ;;
+	        #3) picom ; menu ;;
+	        #4) asdf ; menu ;;
+	        #5) zsh ; menu ;;
+		#6) langs ; menu ;;
 		0) exit 0 ;;
 		*) echo -e $red"Wrong option."$clear; WrongCommand;;
         esac
