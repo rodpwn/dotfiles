@@ -40,7 +40,7 @@ bootstrap() {
 	install_i3blocks_contrib
 	install_asdf_manager
 	get_golang_install
-	bash source $HOME/.zshrc
+    source $HOME/.zshrc
 	install_golang_tools
 	install_asdf_nodejs
 	install_ruby_asdf
@@ -194,6 +194,7 @@ get_rust_lang() {
 get_golang_install() {
 	wget https://go.dev/dl/go1.17.5.linux-amd64.tar.gz
 	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.17.5.linux-amd64.tar.gz
+	rm -f $HOME/go1.17.5.linux-amd64.tar.gz
 }
 
 
