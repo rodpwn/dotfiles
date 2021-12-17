@@ -5,7 +5,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 
-ZSH_THEME="rodpwn"
+ZSH_THEME="rodpwnzsh"
 
 lugins=(git zsh-syntax-highlighting nmap web-search extract python ruby asdf gitfast colorize command-not-found cp)
 
