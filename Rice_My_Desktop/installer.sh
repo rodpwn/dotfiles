@@ -66,9 +66,10 @@ get_custom_zsh_theme() {
 	wget https://raw.githubusercontent.com/rodpwn/dotfiles/main/Rice_My_Desktop/zsh/rodpwnzsh.zsh-theme
 	mv rodpwnzsh.zsh-theme $HOME/.oh-my-zsh/themes
 	rm -rf $HOME/.zshrc
-	https://raw.githubusercontent.com/rodpwn/dotfiles/main/Rice_My_Desktop/zsh/.zshrc
+	https://raw.githubusercontent.com/rodpwn/dotfiles/main/Rice_My_Desktop/zsh/zshrc
+	mv zshrc .zshrc
 	mv .zshrc $HOME
-	source $HOME/.zshrc
+	bash source $HOME/.zshrc
 	
 }
 
