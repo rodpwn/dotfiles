@@ -7,7 +7,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="rodpwnzsh"
 
-lugins=(git zsh-syntax-highlighting nmap web-search extract python ruby asdf gitfast colorize command-not-found cp)
+lugins=(git zsh-syntax-highlighting extract python ruby asdf cp)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -56,8 +56,8 @@ alias d="sudo docker"
 alias biggest="du -h --max-depth=1 | sort -h"
 alias :q="exit"
 alias j="jobs"
-alias burp_v1="java -jar $HOME/Documents/incogbyte/tools/burp_pro_jars/burpsuite_pro_v1.7.37.jar"
-alias burp_v2="java -jar $HOME/Documents/incogbyte/tools/burp_pro_jars/burpsuite_pro_v2021.10.2.jar"
+alias burp_v1="java -jar $HOME/Documents/rodpwn/tools/burp_pro_jars/burpsuite_pro_v1.7.37.jar"
+alias burp_v2="java -jar $HOME/Documents/rodpwn/tools/burp_pro_jars/burpsuite_pro_v2021.10.2.jar"
 alias jadx="$HOME/Documents/rodpwn/tools/mobile/Android/jadx/bin/jadx-gui"
 alias adb="$HOME/Android/Sdk/platform-tools/adb"
 alias frida_start_android="adb \"/data/local/tmp/frida-server\""
@@ -87,7 +87,7 @@ probed_subdomains() {
 
 
 content_discover() {
-        ffuf -mc all -c -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0" -u "$1/FUZZ" -w $HOME/Documents/incogbyte/tools/wordlists/SecLists/Discovery/Web-Content/common.txt -D -e js,php,bak,txt,html,zip,sql,old,gz,log,swp,yaml,yml,config,save,rsa,ppk -ac
+        ffuf -mc all -c -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0" -u "$1/FUZZ" -w $HOME/Documents/rodpwn/tools/wordlists/SecLists/Discovery/Web-Content/common.txt -D -e js,php,bak,txt,html,zip,sql,old,gz,log,swp,yaml,yml,config,save,rsa,ppk -ac
 }
 
 
