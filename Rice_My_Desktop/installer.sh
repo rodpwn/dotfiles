@@ -58,7 +58,7 @@ create_dirs() {
 
 install_deps() {
 	banner "install all deps"
-	sudo apt install zsh coreutils terminator dirmngr gpg nmap wireshark gawk curl wget git zsh cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev  libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev libjsoncpp-dev python3-pip python3-setuptools fzf rofi cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python-xcbgen xcb-proto libxcb-xrm-dev i3-wm libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev xcb libxcb-ewmh2 libpcap-dev i3 i3-gaps i3-wm i3blocks moka-icon-theme faba-icon-theme -y
+	sudo apt install zsh coreutils terminator dirmngr gpg nmap wireshark gawk curl wget git zsh cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev  libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev libjsoncpp-dev python3-pip python3-setuptools fzf rofi cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python-xcbgen xcb-proto libxcb-xrm-dev i3-wm libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev xcb libxcb-ewmh2 libpcap-dev i3 i3-wm i3blocks moka-icon-theme faba-icon-theme -y
 	banner "done"
 }
 
@@ -75,7 +75,7 @@ get_custom_zsh_theme() {
 
 install_ppas() {
 	banner "install ppas"
-	sudo add-apt-repository ppa:mmstick76/alacritty
+	#sudo add-apt-repository ppa:mmstick76/alacritty
 	sudo add-apt-repository ppa:kgilmer/speed-ricer
 	sudo apt update -y; sudo apt upgrade -y
 	sudo apt install alacritty
