@@ -39,11 +39,11 @@ bootstrap() {
 	get_configs_i3_picom
 	install_i3blocks_contrib
 	install_asdf_manager
+	get_golang_install
+	bash source $HOME/.zshrc
+	install_golang_tools
 	install_asdf_nodejs
 	install_ruby_asdf
-	get_golang_install
-	source $HOME/.zshrc
-	install_golang_tools
 	
 }
 
