@@ -1,0 +1,6 @@
+Style - Flat Remix Blue Dark
+Font - Cantarell regular
+Default - Fira code Medium
+WM - Kali-dark
+Qt - Terminal
+
